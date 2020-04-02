@@ -15,9 +15,9 @@ export default function Incidents() {
 
     const navigation = useNavigation();
 
-    
+
     function navigationToDetail(incident) {
-        navigation.navigate('Detail', {incident});
+        navigation.navigate('Detail', { incident });
     }
 
     async function loadIncidents() {
@@ -28,11 +28,14 @@ export default function Incidents() {
         if (total > 0 && incidents.length === total) {
             return
         }
+
         setLoading(true)
-        const response = await api.get('incidents?page=1');
-        setIncidents([...incidents,...response.data]);
+        const response = await api.get('incidents', {
+            params: { page }
+        });
+        setIncidents([...incidents, ...response.data]);
         setTotal(response.headers['x-total-count']);
-        setpage(page+1);
+        setpage(page + 1);
         setLoading(false);
     }
     useEffect(() => {
@@ -50,7 +53,13 @@ export default function Incidents() {
             <Text style={styles.title}>Welcome</Text>
             <Text style={styles.description}>Escolha um dos casos abaixo e salve o dia.</Text>
 
-            <FlatList style={styles.incidentList} data={incidents} keyExtractor={incident => String(incident.id)} showsVerticalScrollIndicator={false}
+            <FlatList
+                onEndReached={loadIncidents}
+                onEndReachedThreshold={0.4}
+                style={styles.incidentList}
+                data={incidents}
+                keyExtractor={incident => String(incident.id)}
+                // showsVerticalScrollIndicator={false}
                 renderItem={({ item: incident }) => (
                     <View style={styles.incident}>
 
@@ -64,7 +73,7 @@ export default function Incidents() {
 
                         <Text style={styles.incidentProperty}>VALOR:</Text>
                         <Text style={styles.incidentValue}>
-                            {Intl.NumberFormat('pt-BR', {style: 'currency',currency: 'BRL'}).format(incident.value)}
+                            {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(incident.value)}
                         </Text>
 
                         <TouchableOpacity style={styles.detailsButton} onPress={() => navigationToDetail(incident)}>
