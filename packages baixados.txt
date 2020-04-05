@@ -1,0 +1,10 @@
+Mobile
+intl
+celebrate
+axios
+expo
+router navigation
+
+backend
+cross-env
+supertest
