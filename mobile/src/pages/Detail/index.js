@@ -10,11 +10,11 @@ export default function Detail() {
     const navigation = useNavigation();
     const route = useRoute();
     const incident = route.params.incident;
-    const msg = `Olá, ${incident.name}, quero ajudar no caso ${incident.title}, com o valor de ${Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(incident.value)}`
+    const msg = `Hi, ${incident.name}, I'd like to support this cause ${incident.title}, donating ${Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(incident.value)}`
 
     function sendEmail() {
         MailComposer.composeAsync({
-            subject: `Herói do caso: ${incident.title}`,
+            subject: `Hero of: ${incident.title}`,
             recipients: [incident.email],
             body: msg
         });
@@ -42,11 +42,11 @@ export default function Detail() {
                 <Text style={styles.incidentValue}>{incident.name} de {incident.city}/{incident.uf}</Text>
 
 
-                <Text style={styles.incidentProperty}>CASO:</Text>
+                <Text style={styles.incidentProperty}>CAUSE:</Text>
                 <Text style={styles.incidentValue}>{incident.title}</Text>
 
 
-                <Text style={styles.incidentProperty}>VALOR:</Text>
+                <Text style={styles.incidentProperty}>VALUE:</Text>
                 <Text style={styles.incidentValue}>
                     {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(incident.value)}
                 </Text>
@@ -56,9 +56,9 @@ export default function Detail() {
             </View>
 
             <View style={styles.contactBox}>
-                <Text style={styles.heroTitle}>Salve o dia!</Text>
+                <Text style={styles.heroTitle}>Save the day!</Text>
                 <Text style={styles.heroTitle}>Be The Hero</Text>
-                <Text style={styles.heroDescription}>Entre em contato:</Text>
+                <Text style={styles.heroDescription}>Contacts:</Text>
 
                 <View style={styles.actions}>
                     <TouchableOpacity style={styles.action} onPress={sendWhatsapp}>
